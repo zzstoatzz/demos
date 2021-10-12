@@ -15,7 +15,7 @@ schedule = Schedule(
 storage = GitHub(
     repo="zzstoatzz/demos",
     path="prefect/hello-prefect/flow.py",
-    access_token_secret="GITHUB_ACCESS_TOKEN"
+    access_token_secret="general"
 )
 
 @task(name="Extract data from somewhere")
@@ -31,7 +31,10 @@ def load() -> None:
     pass
 
 
-with Flow("test") as flow:
+with Flow(
+    "test",
+    storage=storage
+) as flow:
     data = extract()
     transformed_data = transform(data)
     result = load(data)
