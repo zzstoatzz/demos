@@ -45,8 +45,10 @@ def load(data: pd.DataFrame) -> None:
 
 
 with Flow(
-    "test",
+    "My Test Flow",
     storage=storage,
+    run_config=run_config
+
 ) as flow:
 
     raw_data = extract()
