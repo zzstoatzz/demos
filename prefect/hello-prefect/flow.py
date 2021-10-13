@@ -49,14 +49,22 @@ with Flow(
     storage=storage,
     run_config=run_config
 
+
+
+
 ) as flow:
     some_number_of_cat_facts = Parameter(
         "some_number_of_cat_facts", default=1
     )
 
     raw_data = extract(some_number_of_cat_facts)
+
     data = transform(raw_data=raw_data)
+
     result = load(data)
+
+
+
 
 if __name__ == "__main__":
     try:
@@ -64,8 +72,6 @@ if __name__ == "__main__":
     except IndexError:
         N = 1
 
-    params = dict(
-        some_number_of_cat_facts = int(N)
-    )
+    params = dict(some_number_of_cat_facts = int(N))
 
-    flow.run(parameters=params)
+    flow.run()
