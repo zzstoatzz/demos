@@ -11,8 +11,8 @@ from prefect.storage import GitHub
 executor = LocalDaskExecutor(num_workers=4)
 
 run_config = DockerRun(
-        labels=["tastyworks-internal"], image="slateco/prefect-pandas-pgsql:latest"
-    ),
+    image="slateco/prefect-pandas-pgsql:latest"
+)
 
 schedule = Schedule(
     clocks=[
@@ -47,8 +47,6 @@ def load(data: pd.DataFrame) -> None:
 with Flow(
     "test",
     storage=storage,
-    executor=LocalDaskExecutor(scheduler="threads", num_workers=1),
-
 ) as flow:
 
     raw_data = extract()
