@@ -11,7 +11,7 @@ from prefect.storage import GitHub
 executor = LocalDaskExecutor(num_workers=4)
 
 run_config = DockerRun(
-    image="slateco/prefect-pandas-pgsql:latest"
+    labels=['pad.local']
 )
 
 schedule = Schedule(
