@@ -3,11 +3,16 @@ import pandas as pd
 from datetime import timedelta
 from prefect import Flow, task
 from prefect.executors import LocalDaskExecutor
+from prefect.run_configs import DockerRun
 from prefect.schedules import Schedule, clocks
 from prefect.storage import GitHub
 
 
 executor = LocalDaskExecutor(num_workers=4)
+
+run_config = DockerRun(
+        labels=["tastyworks-internal"], image="slateco/prefect-pandas-pgsql:latest"
+    ),
 
 schedule = Schedule(
     clocks=[
