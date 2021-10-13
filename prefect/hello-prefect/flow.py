@@ -11,7 +11,7 @@ run_config = DockerRun(
 storage = GitHub(
     repo="zzstoatzz/demos",
     path="prefect/hello-prefect/flow.py",
-    access_token_secret="general"
+    access_token_secret="GITHUB_PAT"
 )
 
 @task(name="Extract data from somewhere")
