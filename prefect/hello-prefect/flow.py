@@ -1,23 +1,11 @@
 import pandas as pd
 
-from datetime import timedelta
 from prefect import Flow, task
-from prefect.executors import LocalDaskExecutor
-from prefect.run_configs import LocalRun
-from prefect.schedules import Schedule, clocks
+from prefect.run_configs import DockerRun
 from prefect.storage import GitHub
 
-
-executor = LocalDaskExecutor(num_workers=4)
-
-run_config = LocalRun(
-    labels=['pad.local']
-)
-
-schedule = Schedule(
-    clocks=[
-        clocks.IntervalClock(timedelta(hours=4))
-    ]
+run_config = DockerRun(
+    image='slateco/prefect-pandas-pgsql:latest'
 )
 
 storage = GitHub(
