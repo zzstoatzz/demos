@@ -5,6 +5,7 @@ import sys
 from prefect import context, Flow, Parameter, task
 from prefect.run_configs import DockerRun
 from prefect.storage import GitHub
+from typing import Dict, List
 
 logger = context.get("logger")
 
@@ -36,7 +37,7 @@ def extract(N: int) -> dict:
     return results
 
 @task(name="Transform data somehow")
-def transform(raw_data: dict) -> pd.DataFrame:
+def transform(raw_data: List[Dict]) -> pd.DataFrame:
     return pd.DataFrame(raw_data)
 
 @task(name="Load data to somewhere")
@@ -49,22 +50,16 @@ with Flow(
     storage=storage,
     run_config=run_config
 
-
-
-
 ) as flow:
     some_number_of_cat_facts = Parameter(
         "some_number_of_cat_facts", default=1
     )
 
-    raw_data = extract(some_number_of_cat_facts)
+    raw_data = extract(N=some_number_of_cat_facts)
 
     data = transform(raw_data=raw_data)
 
-    result = load(data)
-
-
-
+    result = load(data=data)
 
 if __name__ == "__main__":
     try:
